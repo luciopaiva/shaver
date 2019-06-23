@@ -108,7 +108,7 @@ class App {
         const HOLE_DISTANCE = 48;
 
         this.drawConcentricRings(
-            [HOLE_SIZE, "#464944", "#333633"],
+            [HOLE_SIZE, "#464944", "#262826"],
             [70, "#3d3a34", "#605c52"],
             [90, "#605b51", "#3d3a34"],
             [125, "#57544a", "#8f8f82"],
