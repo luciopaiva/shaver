@@ -127,7 +127,7 @@ class App {
             const holeX = cx + Math.cos(i * TAU / 6) * HOLE_DISTANCE;
             const holeY = cy + Math.sin(i * TAU / 6) * HOLE_DISTANCE;
 
-            ctx.fillStyle = "#1b1a17";
+            ctx.fillStyle = "#131210";
             ctx.beginPath();
             ctx.arc(holeX, holeY, HOLE_SIZE, 0, TAU);
             ctx.fill();
