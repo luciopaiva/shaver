@@ -9,14 +9,25 @@
             padding: 0;
             margin: 0;
             overflow: hidden;
+            font-family: Arial, serif;
         }
         canvas {
-            background: radial-gradient(circle, transparent, #626262) #acacbc;
+            background: radial-gradient(circle, transparent, #6d695c) #aaaa97;
+        }
+        #msg {
+            position: absolute;
+            left: 50%;
+            top: 75%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            color: #d3d3d3;
+            font-size: 40px;
+            text-shadow: 0 0 3px black;
         }
     </style>
     <script src="index.js" type="module" defer></script>
 </head>
 <body>
-
+    <div id="msg">Press space to start</div>
 </body>
 </html>
