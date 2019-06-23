@@ -2,7 +2,7 @@
 const TAU = Math.PI * 2;
 const MIN_RADIUS = 20;
 const MAX_RADIUS = 55;
-const MIN_ANGLE = Math.PI / 6;
+const MIN_ANGLE = Math.PI / 20;
 const MAX_ANGLE = Math.PI / 3;
 const COUNT = 20;
 
