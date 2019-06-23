@@ -39,15 +39,21 @@ class App {
 
         document.body.appendChild(this.canvas);
 
+        this.prepareAudio();
+
         window.addEventListener("keydown", event => {
             if (!this.isSpacePressed && event.key === " ") {
                 this.isSpacePressed = true;
                 this.msg.style.display = "none";
+                // this.audioSource.start(0);
+                this.audioContext.resume();
             }
         });
         window.addEventListener("keyup", event => {
             if (this.isSpacePressed && event.key === " ") {
                 this.isSpacePressed = false;
+                // this.audioSource.suspend(0);
+                this.audioContext.suspend();
             }
         });
 
@@ -55,6 +61,26 @@ class App {
 
         this.updateFn = this.update.bind(this);
         this.update();
+    }
+
+    /** @return {void} */
+    async prepareAudio() {
+        const response = await fetch("shaver.ogg");
+        const responseBuffer = await response.arrayBuffer();
+
+        this.audioContext = new AudioContext();
+
+        this.audioSource = this.audioContext.createBufferSource();
+        this.audioSource.connect(this.audioContext.destination);
+
+        this.audioContext.decodeAudioData(responseBuffer, buffer => {
+            this.audioSource.buffer = buffer;
+            this.audioSource.loop = true;
+
+            // start playing buffer, but also suspend audio context until space is pressed
+            this.audioSource.start();
+            this.audioContext.suspend();
+        });
     }
 
     reset() {
