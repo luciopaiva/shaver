@@ -41,19 +41,31 @@ class App {
 
         this.prepareAudio();
 
+        this.audioStopAt = 0;
+
         window.addEventListener("keydown", event => {
             if (!this.isSpacePressed && event.key === " ") {
                 this.isSpacePressed = true;
                 this.msg.style.display = "none";
                 // this.audioSource.start(0);
                 this.audioContext.resume();
+
+                // first time will take a bit longer to end, so that the user can
+                // hear the sound event if the space bar is released too soon
+                if (this.audioStopAt === 0) {
+                    this.audioStopAt = Date.now() + 1000;
+                }
             }
         });
         window.addEventListener("keyup", event => {
             if (this.isSpacePressed && event.key === " ") {
-                this.isSpacePressed = false;
-                // this.audioSource.suspend(0);
-                this.audioContext.suspend();
+
+                const audioLeft = this.audioStopAt - Date.now();
+                if (audioLeft > 0) {
+                    setTimeout(this.suspend.bind(this), audioLeft);
+                } else {
+                    this.suspend();
+                }
             }
         });
 
@@ -61,6 +73,11 @@ class App {
 
         this.updateFn = this.update.bind(this);
         this.update();
+    }
+
+    suspend() {
+        this.isSpacePressed = false;
+        this.audioContext.suspend();
     }
 
     /** @return {void} */
@@ -95,7 +112,6 @@ class App {
 
         this.ctx.clearRect(0, 0, this.width, this.height);
 
-        // sink drain
         this.drawSinkDrain();
     }
 
